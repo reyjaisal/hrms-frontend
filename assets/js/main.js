@@ -24,11 +24,11 @@ $(document).ready(function(){
 
     // Add Employee Modal Calling
     $("#add-employee").click(function(){
-        $("#add-employee-modal-form")[0].reset()
-        $("#addEmployeeModalLabel").html('Add Employee')
-        $("#password-container").show()
-        $("#id_email").removeAttr("readonly")
-        $("#add-employee-button").attr('onclick', 'submitAddEmoloyeeForm()').html('Submit')
+        $("#add-employee-modal-form")[0].reset();
+        $("#addEmployeeModalLabel").html('Add Employee');
+        $("#password-container").show();
+        $("#id_email").removeAttr("readonly");
+        $("#add-employee-button").attr('onclick', 'submitAddEmoloyeeForm()').html('Submit');
 
         const addEmplpoyeeModalElement = document.getElementById('addEmployeeModal');
         const addEmplpoyeeModal = new bootstrap.Modal(addEmplpoyeeModalElement);
@@ -53,7 +53,7 @@ function loadEmployees(employee_name=null, use_loader=true){
         startLoader()
 
     $.ajax({
-        url: 'https://hrms-backend-lum4.onrender.com/api/employees/get_employees/',
+        url: 'http://localhost:8000/api/employees/get_employees/',
         method: 'GET',
         data: {
             employee_name: employee_name
@@ -183,7 +183,7 @@ function getEmployeeDetails(employee_id){
     $("#password-container").hide()
     $("#id_email").attr("readonly", true)
     $.ajax({
-        url: 'https://hrms-backend-lum4.onrender.com/api/employees/' + employee_id + '/get_employee/',
+        url: 'http://localhost:8000/api/employees/' + employee_id + '/get_employee/',
         type: 'get',
         dataType: "json",
         success: function(response) {
@@ -242,46 +242,69 @@ function submitAddEmoloyeeForm(edit=false){
         let data = new FormData(form);
 
         // Update url and method type
-        let url = 'https://hrms-backend-lum4.onrender.com/api/employees/add_employee/'
+        let url = 'http://localhost:8000/api/employees/add_employee/'
         let type = 'post'
         if (edit){
             let employee_id = $("#id_employee_id").val()
-            url = 'https://hrms-backend-lum4.onrender.com/api/employees/' + employee_id + '/update_employee/'
+            url = 'http://localhost:8000/api/employees/' + employee_id + '/update_employee/'
             type = 'put'
         }
-
-        $.ajax({
-            url: url,
-            data: data,
-            type: type,
-            processData: false,
-            contentType: false,
-            dataType: "json",
-            success: function(response) {
-                if (response.success){
-                    Notiflix.Notify.success("Employee added successfully!");
-                    loadEmployees()
-                    return
-                } else if (response.error)
-                    Notiflix.Notify.failure(response.error); 
-                else
-                    Notiflix.Notify.failure("Something went wrong. Please try again later!");
-
-                // it contains the stopLoader function
-                loadEmployees()
-                // If form submission failed, reopen the modal with previously filled data
-                $("#addEmployeeModal").modal('show')
-            },
-            error: function(xhr, status, error) {
-                console.log("Error:", error);
-                // it contains the stopLoader function
-                loadEmployees()
-                // If form submission failed, reopen the modal with previously filled data
-                $("#addEmployeeModal").modal('show')
-            }
-        });
+        
+        submitAddEmoloyeeFormComponent(url, data, type)
     } else 
         Notiflix.Notify.failure("Please fill all the required fields!")
+}
+
+function submitAddEmoloyeeFormComponent(url, data, type, resubmit=false){
+    if (resubmit)
+        data.append('restore_archived_employee', true)
+        
+    $.ajax({
+        url: url,
+        data: data,
+        type: type,
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        success: function(response) {
+            if (response.success){
+                Notiflix.Notify.success("Employee added successfully!");
+                loadEmployees()
+                return
+            } else if (response.need_activation_confirmation){ // If employee exist
+                    Notiflix.Confirm.show(
+                    'Restore Employee?',
+                    `Employee already exist in system with ${$("#id_gmail").val()} email, Do you want to restore the archived user?`,
+                    'Yes',
+                    'Cancel',
+                    function(){ 
+                        submitAddEmoloyeeFormComponent(url, data, type, true)
+                    },
+                    function(){
+                        $("#addEmployeeModal").modal('show');
+                    }
+                );
+            } else if (response.user_exist){
+                // If form submission failed, reopen the modal with previously filled data
+                Notiflix.Notify.warning(`Employee already exist in system with ${$("#id_gmail").val()} email, please user different email!`)
+                setTimeout(function(){
+                    $("#addEmployeeModal").modal('show');
+                }, 500)
+            } else if (response.error)
+                Notiflix.Notify.failure(response.error); 
+            else
+                Notiflix.Notify.failure("Something went wrong. Please try again later!");
+            
+            stopLoader("dashboard")
+        },
+        error: function(xhr, status, error) {
+            console.log("Error:", error);
+            // it contains the stopLoader function
+            loadEmployees()
+            // If form submission failed, reopen the modal with previously filled data
+            $("#addEmployeeModal").modal('show')
+        }
+    });
 }
 
 
@@ -295,7 +318,7 @@ function archiveEmployee(employee_id){
         function(){ 
             startLoader()
             $.ajax({
-                url: 'https://hrms-backend-lum4.onrender.com/api/employees/' + employee_id + '/archive_employee/',
+                url: 'http://localhost:8000/api/employees/' + employee_id + '/archive_employee/',
                 type: 'delete',
                 dataType: "json",
                 success: function(response) {
@@ -322,6 +345,34 @@ function archiveEmployee(employee_id){
             Notiflix.Notify.info('Employee archiving cancelled')
         }
     );
+}
+
+
+function restoreEmployee(employee_id){
+    startLoader()
+    $.ajax({
+        url: 'http://localhost:8000/api/employees/' + employee_id + '/restore_employee/',
+        type: 'patch',
+        dataType: "json",
+        success: function(response) {
+            if (response.success){
+                Notiflix.Notify.success("Employee restored successfully!");
+                loadEmployees()
+                return
+            } else if (response.error)
+                Notiflix.Notify.failure(response.error); 
+            else
+                Notiflix.Notify.failure("Something went wrong. Please try again later!");
+
+            // it contains the stopLoader function
+            loadEmployees()
+        },
+        error: function(xhr, status, error) {
+            console.log("Error:", error);
+            // it contains the stopLoader function
+            loadEmployees()
+        }
+    }); 
 }
 
 
@@ -413,7 +464,7 @@ function loadAttendanceCalendar() {
 // Fethc Attendance data
 function fetchAttendance(startDate, endDate) {
     $.ajax({
-        url: 'https://hrms-backend-lum4.onrender.com/api/attendances/get_calendar_attendance/',
+        url: 'http://localhost:8000/api/attendances/get_calendar_attendance/',
         method: 'GET',
         dataType: 'json',
         data: {
@@ -458,12 +509,6 @@ function fetchAttendance(startDate, endDate) {
                     calendar.updateSize();
                 }, 200);
 
-                // Update datepicker 
-                let date = new Date(response.current_date);
-                let formattedDate = date.toISOString().split('T')[0];
-
-                $(".date-filter").val(formattedDate);
-
                 stopLoader("attendance-calendar");
             }
         },
@@ -481,9 +526,11 @@ function loadListViewAttendance(date=null){
     $(".date-filter").removeClass("force-hide")
     startLoader()
     // current date
-    let current_date = new Date();
+    if (!date)
+        date = $(".date-filter").val();
+    
     $.ajax({
-        url: 'https://hrms-backend-lum4.onrender.com/api/attendances/get_listview_attendance/',
+        url: 'http://localhost:8000/api/attendances/get_listview_attendance/',
         data: {
             attendance_date: date
         },
@@ -524,6 +571,12 @@ function loadListViewAttendance(date=null){
                     $("#listview-content-placeholder").show()
                     $("#list-view-container").hide()
                 }
+                // Update datepicker 
+                let date = new Date(response.current_date);
+                let formattedDate = date.toISOString().split('T')[0];
+
+                $(".date-filter").val(formattedDate);
+
                 stopLoader("attendance-calendar")
             }
         },
@@ -543,7 +596,7 @@ function markAttendance(status, emp_id, is_current_day){
     }
 
     $.ajax({
-        url: 'https://hrms-backend-lum4.onrender.com/api/attendances/'+ emp_id +'/mark_attendance/',
+        url: 'http://localhost:8000/api/attendances/'+ emp_id +'/mark_attendance/',
         method: 'patch',
         dataType: 'json',
         data: {
@@ -683,7 +736,7 @@ $("#attendance-tracker-link").click(function(){
     $(this).addClass("active")
     $("#dashboard").hide()
     $("#attendance-calendar").show()
-    loadAttendanceCalendar()
+    loadListViewAttendance()
 });
 
 $("#calendar-view").click(function(){

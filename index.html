@@ -53,7 +53,7 @@
                             </div>
                             <div class="user-info">
                                 <h6 class="mb-0 user-full-name">Vishal Jaiswal</h6>
-                                <p class="mb-0 designation">Backend Developer</p>
+                                <p class="mb-0 designation">Fullstack Developer</p>
                             </div>
                             <!-- <button class="btn logout-button" id="logout" type="button">Log Out <i class="fa-solid fa-arrow-right-from-bracket"></i></button> -->
                         </div>
@@ -119,8 +119,9 @@
 
                                 <div class="employee-status-card-counter">
                                     <h3 class="mb-0 counter-text">
-                                         <span id="resigned-employees-counter"></span> 
-                                        <span class="sub-counter-text danger-color fw-bold" id="new-resigned-employees-counter"></span></h3>
+                                        <span id="resigned-employees-counter"></span> 
+                                        <span class="sub-counter-text danger-color fw-bold" id="new-resigned-employees-counter"></span>
+                                    </h3>
                                 </div>
                             </div>
                         </div>
@@ -139,8 +140,12 @@
                     <div class="d-flex align-items-center justify-content-between">
                         <!-- Tab navigration -->
                         <div class="navigation-tabs d-flex">
-                            <button id="all-employees-tab" class="btn active table-tab-btn"><h4 class="mb-0">All Employees <span class="primary-color" id="tab-all-emp-count"></span></h4></button>
-                            <button id="resigned-employees-tab" class="btn table-tab-btn"><h4 class="mb-0">Resigned Employees <span class="danger-color" id="tab-resigned-emp-count"></span> </h4></button>
+                            <button id="all-employees-tab" class="btn active table-tab-btn">
+                                <h4 class="mb-0">All Employees <span class="primary-color" id="tab-all-emp-count"></span></h4>
+                            </button>
+                            <button id="resigned-employees-tab" class="btn table-tab-btn">
+                                <h4 class="mb-0">Resigned Employees <span class="danger-color" id="tab-resigned-emp-count"></span></h4>
+                            </button>
                         </div>
 
                         <div class="employee-detailed-view-filter">
@@ -226,11 +231,14 @@
                         <div>
                             <h2 class="d-inline-block mb-0">Employee Attendance Status</h2>
                         </div>
-                        <div class="action-btns d-flex justify-content-center gap-2">
-                            <input type="date" class="form-control date-filter d-inline datepicker" placeholder="Select Date" name="daterange" />
-                            <div class="btn-group d-inline" role="group" aria-label="Basic example">
-                                <button type="button" class="btn primary-outline-btn active" id="calendar-view"><i class="fa-solid fa-calendar-days"></i></button>
-                                <button type="button" class="btn primary-outline-btn" id="list-view"><i class="fa-solid fa-list"></i></button>
+                        <div class="action-btns d-flex justify-content-center align-items-center gap-2">
+                            <h4 class="d-inline-block me-1 mb-0">Date: </h4>
+                            <input type="date" class="form-control date-filter d-inline-block datepicker" placeholder="Select Date" name="daterange" />
+                            <!-- <div class="">
+                            </div> -->
+                            <div class="btn-group d-inline ms-3" role="group" aria-label="Basic example">
+                                <button type="button" class="btn primary-outline-btn active" id="list-view"><i class="fa-solid fa-list"></i></button>
+                                <button type="button" class="btn primary-outline-btn" id="calendar-view"><i class="fa-solid fa-calendar-days"></i></button>
                             </div>
                         </div>
                     </div>
@@ -251,11 +259,11 @@
                 <!-- Placeholder End -->
                 
                 <!-- Calendar -->
-                <div id="calendar" class=""></div>
+                <div id="calendar" style="display: none;"></div>
                 <!-- Calendar End -->
 
                 
-                <div id="list-view-container" style="display: none;">    
+                <div id="list-view-container">    
                     <!-- Dynamic Employee Info Table -->
                     <table class="table" id="dynamic-employee-info-table">
                         <thead>
@@ -343,6 +351,12 @@
                                 <option value="Jquery">Jquery</option>
                             </select>
                         </div>
+                        <!-- <div class="col-md-12 form-check" id="restore-employee-container" style="display: none;">
+                            <input class="form-check-input" type="checkbox" value="" id="restore_archived_employee" name="restore_archived_employee">
+                            <label class="form-check-label" for="restore-archived-employee">
+                                Restore archived employee
+                            </label>
+                        </div> -->
                         <input type="hidden" name="employee_id" id="id_employee_id">
                     </form>
                 </div>
