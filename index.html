@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Management System</title>
+    <!-- Libraries -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="assets/css/notiflix-3.2.8.min.css">
+    <link rel="stylesheet" href="assets/css/style.css"/>
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <!-- Logo container -->
+        <div class="container-fluid p-3" id="logo-container">
+            <h2 class="mb-0 text-center">
+                <a href="" class="navbar-brand text-white">
+                    HRMS LITE
+                </a>
+            </h2>
+        </div>
+        <!-- Logo container End -->
+
+        <hr class="space-only mt-1">
+
+        <!-- Sidebar Navigation -->
+        <section id="sidebar-body">
+            <div class="container-fluid">
+                <ul class="sidebar-navigation navbar-nav">
+                    <li><a class="nav-link active" id="dashboard-link" href="javascript:void(0)"><i class="fa-solid fa-tachograph-digital"></i> Dashboard</a></li>
+                    <li><a class="nav-link" id="attendance-tracker-link" href="javascript:void(0)"><i class="fa-regular fa-calendar-days"></i> Attendance Tracker</a></li>
+                </ul>
+            </div>
+        </section>
+        <!-- Sidebar Navigation -->
+    </nav>
+    
+    <!-- Body Content Section -->
+    <section id="body-content">
+        <!-- Header -->
+        <header id="header">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid">
+                    <h5 class="navbar-brand mb-0">Hello, HRMS User!</h5>
+                    <!-- User actions corner -->
+                    <div id="user-action" class="ms-auto">
+                        <div class="d-flex gap-2 align-items-end user-profile-display">
+                            <div class="user-profile">
+                                <img src="assets/images/primary_profile.jpg" class="w-100 rounded-circle" alt="">
+                            </div>
+                            <div class="user-info">
+                                <h6 class="mb-0 user-full-name">Vishal Jaiswal</h6>
+                                <p class="mb-0 designation">Backend Developer</p>
+                            </div>
+                            <!-- <button class="btn logout-button" id="logout" type="button">Log Out <i class="fa-solid fa-arrow-right-from-bracket"></i></button> -->
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <!-- Header Ends -->
+
+        <!-- Fullscreen loader -->
+        <div id="fullscreen-loader">
+            <div class="loader"></div>
+        </div>
+
+        <hr class="space-only mt-0">
+
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="">
+            <!-- Sub-topbar -->
+            <div id="sub-topbar" class="w-100">
+                <div class="container-fluid text-end">
+                    <button class="btn btn-success py-2 px-4" id="add-employee"><i class="fa-solid fa-plus"></i> Add New Employee</button>
+                </div>
+            </div>
+            <!-- Sub-topbar Ends -->
+
+            <hr class="space-only mt-0">
+
+            <!-- Employee Status -->
+            <div id="employee-status">
+                <div class="container-fluid">
+                    <div class="row m-0">
+                        <!-- Total Employees -->
+                        <div class="col-md-6 employee-status-card" id="total-employees">
+                            <div class="card-wrapper">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h4 class="mb-0">Total Employees</h4>
+                                    <span class="employee-status-card-icon">
+                                        <i class="fa-solid fa-people-group"></i>
+                                    </span>
+                                </div>
+
+                                <!-- Employees counter -->
+                                <div class="employee-status-card-counter">
+                                    <h3 class="mb-0 counter-text">
+                                        <span id="total-employees-counter"></span> 
+                                        <span class="sub-counter-text primary-color fw-bold" id="new-employees-counter"></span>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Total Employees End -->
+
+                        <!-- Resigned Employees -->
+                        <div class="col-md-6 employee-status-card" id="resigned-employees">
+                            <div class="card-wrapper">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h4 class="mb-0">Resigned Employees</h4>
+                                    <span class="employee-status-card-icon">
+                                        <i class="fa-solid fa-user-minus"></i>
+                                    </span>
+                                </div>
+
+                                <div class="employee-status-card-counter">
+                                    <h3 class="mb-0 counter-text">
+                                         <span id="resigned-employees-counter"></span> 
+                                        <span class="sub-counter-text danger-color fw-bold" id="new-resigned-employees-counter"></span></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Resigned Employees End -->
+                    </div>
+                </div>
+            </div>
+            <!-- Employee Status -->
+
+            <hr class="space-only">
+
+            <!-- Employees Detailed View -->
+            <div id="employee-detailed-view">
+                <div class="container-fluid">
+                    <!-- Tab and Filter container -->
+                    <div class="d-flex align-items-center justify-content-between">
+                        <!-- Tab navigration -->
+                        <div class="navigation-tabs d-flex">
+                            <button id="all-employees-tab" class="btn active table-tab-btn"><h4 class="mb-0">All Employees <span class="primary-color" id="tab-all-emp-count"></span></h4></button>
+                            <button id="resigned-employees-tab" class="btn table-tab-btn"><h4 class="mb-0">Resigned Employees <span class="danger-color" id="tab-resigned-emp-count"></span> </h4></button>
+                        </div>
+
+                        <div class="employee-detailed-view-filter">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input class="form-control search-filter" type="text" placeholder="Search employee by name" aria-label="Search"/>
+                        </div>
+                    </div>
+                    <!-- Tab and filter container end -->
+
+                    <hr class="space-only my-4">
+
+                    <!-- Detailed View Containers -->
+                    <div id="detailed-view-containers">
+                        <div class="container-fluid">
+                            <!-- All Employees Body -->
+                            <div id="all-employees-body">
+                                <!-- all employees placeholer -->
+                                <div id="detailed-view-content-placeholder" style="display:none;">
+                                    <div class="content-placeholder">
+                                        <h4 class="mb-0"><i class="icon fa-solid fa-user-check"></i> No employees found</h4>
+                                    </div>
+                                </div>
+
+                                <table class="table" id="all-employees-table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Employee ID</th>
+                                            <th scope="col">Employee Name</th>
+                                            <th scope="col">Department</th>
+                                            <th scope="col">Primary Skill</th>
+                                            <th scope="col">Experience</th>
+                                            <th scope="col">Date of Joining</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="detailed-view-body"></tbody>
+                                </table>
+                            </div>
+                            <!-- All Employee Body -->
+
+                            <!-- Resigned Employee Body -->
+                            <div id="resigned-employees-body" style="display: none;">
+                                <!-- Resigned employee placholder -->
+                                <div id="resigned-view-content-placeholder" style="display:none;">
+                                    <div class="content-placeholder">
+                                        <h4 class="mb-0"><i class="icon fa-solid fa-user-minus"></i> No resigned employees found</h4>
+                                    </div>
+                                </div>
+
+                                <table class="table" id="resigned-employees-table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Employee ID</th>
+                                            <th scope="col">Employee Name</th>
+                                            <th scope="col">Department</th>
+                                            <th scope="col">Primary Skill</th>
+                                            <th scope="col">Experience</th>
+                                            <th scope="col">Date of Joining</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="resigned-detailed-view-body"></tbody>
+                                </table>
+                            </div>
+                            <!-- Resigned Employee Body End -->
+                        </div>
+                    </div>
+                    <!-- Detailed View Containers End-->
+                </div>
+            </div>
+            <!-- Employees Detailed View End -->
+        </div>
+        <!-- Dashboard Section End -->
+
+        <!-- Attendance Calendar -->
+        <div id="attendance-calendar" style="display: none;">
+            <hr class="space-only mt-3">
+
+            <!-- Sub-topbar -->
+            <div id="sub-topbar" class="w-100">
+                <div class="container-fluid">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h2 class="d-inline-block mb-0">Employee Attendance Status</h2>
+                        </div>
+                        <div class="action-btns d-flex justify-content-center gap-2">
+                            <input type="date" class="form-control date-filter d-inline datepicker" placeholder="Select Date" name="daterange" />
+                            <div class="btn-group d-inline" role="group" aria-label="Basic example">
+                                <button type="button" class="btn primary-outline-btn active" id="calendar-view"><i class="fa-solid fa-calendar-days"></i></button>
+                                <button type="button" class="btn primary-outline-btn" id="list-view"><i class="fa-solid fa-list"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Sub-topbar Ends -->
+
+            <hr class="space-only mt-0">
+
+            <!-- Calendar Container -->
+            <div class="container-fluid">
+                <!-- Placeholder -->
+                <div id="listview-content-placeholder" style="display:none;">
+                    <div class="content-placeholder">
+                        <h4 class="mb-0"><i class="icon fa-solid fa-file-circle-exclamation"></i> No attendance found</h4>
+                    </div>
+                </div>
+                <!-- Placeholder End -->
+                
+                <!-- Calendar -->
+                <div id="calendar" class=""></div>
+                <!-- Calendar End -->
+
+                
+                <div id="list-view-container" style="display: none;">    
+                    <!-- Dynamic Employee Info Table -->
+                    <table class="table" id="dynamic-employee-info-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Employee ID</th>
+                                <th scope="col">Employee</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Department</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="employee-list-body"></tbody>
+                    </table>
+                    <!-- Dynamic Employee Info Table End -->
+                </div>
+            </div>
+            <!-- Calendar Calendar End -->
+        </div>
+        <!-- Attendance Calendar End -->
+    </section>
+    <!-- Header Ends -->
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="container-fluid">
+            <h6 class="mb-0 text-center"> <i class="fa-solid fa-heart" style="color:red"></i> Designed and developed by <a class="nav-link d-inline text-white link-underline-primary text-decoration-underline" href="https://www.linkedin.com/in/reyjaisal">Vishal Jaiswal</a></h6>
+        </div>
+    </footer>
+    <!-- Footer End -->
+
+    <!-- Modal Popups -->
+    <div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered  modal-lg">
+            <div class="modal-content">
+                <div class="modal-header primary-bg-color">
+                    <h1 class="modal-title fs-5 text-white" id="addEmployeeModalLabel">Add Employee</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="row g-3" id="add-employee-modal-form">
+                        <div class="col-md-6">
+                            <label for="id_first_name" class="form-label">First Name <span class="required">*</span></label>
+                            <input type="text" class="form-control" name="first_name" id="id_first_name" required placeholder="e.g. Satyam">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="id_last_name" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" name="last_name" id="id_last_name" placeholder="e.g. Agrawal">
+                        </div>
+                        <div class="col-12">
+                            <label for="id_email" class="form-label">Email <span class="required">*</span></label>
+                            <input type="email" class="form-control" name="email" id="id_email" placeholder="You email" required>
+                        </div>
+                        <div class="col-12" id="password-container">
+                            <label for="id_password" class="form-label">Password <span class="required">*</span></label>
+                            <input type="password" class="form-control" name="password" id="id_password" placeholder="" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="id_department" class="form-label">Department <span class="required">*</span></label>
+                            <select id="id_department" name="department" class="form-select" required>
+                                
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="id_designation" class="form-label">Designation <span class="required">*</span></label>
+                            <select id="id_designation" name="designation" class="form-select" required>
+                                <option value="" selected>-- Select Designation --</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="id_experience" class="form-label">Experience</label>
+                            <input type="number" class="form-control" id="id_experience" name="experience" placeholder="Year.Month">
+                        </div>
+                        <div class="col-md-12">
+                            <label for="id_skills" class="form-label">Skills</label>
+                            <select id="id_skills" name="skills" class="form-select" multiple required data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" data-bs-title="You can select multiple options">
+                                <option value="" selected>-- Select Skill(s) --</option>
+                                <option value="Python">Python</option>
+                                <option value="Java">Java</option>
+                                <option value="Django">Django</option>
+                                <option value="React">React</option>
+                                <option value="Angular">Angular</option>
+                                <option value="PHP">PHP</option>
+                                <option value="MongoDB">MongoDB</option>
+                                <option value="MySQL">MySQL</option>
+                                <option value="Jquery">Jquery</option>
+                            </select>
+                        </div>
+                        <input type="hidden" name="employee_id" id="id_employee_id">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="add-employee-button" onclick="submitAddEmoloyeeForm()" class="btn primary-bg-color">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Popups End -->
+
+
+    <!-- Script Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@4.0.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="assets/js/notiflix-3.2.8.min.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <!-- Calendar Configuration/script -->
+    <script>
+        
+    </script>
+
+    <!-- Ajax and scripts for Employee Dashboard-->
+    <script> 
+        
+    </script>
+    <!-- Ajax and scripts for Employee Dashboards Ends -->
+    
+    <!-- Event Listener -->
+    <script>
+        
+    </script>
+    <!-- Event Listener Ends -->
+</body>
+</html>

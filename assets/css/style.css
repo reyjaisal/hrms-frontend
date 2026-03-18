@@ -1,0 +1,341 @@
+.btn {
+  border: none;
+}
+.btn.btn-success {
+  background-color: #42BF77 !important;
+}
+.btn.primary-outline-btn {
+  border: solid 1px #42BF77;
+  border-radius: 5px;
+  color: #299120;
+}
+.btn.primary-outline-btn.active {
+  background-color: #42BF77;
+  color: #ffffff;
+}
+
+.force-hide {
+  display: none !important;
+}
+
+.disabled {
+  opacity: 0.5 !important;
+}
+
+hr.space-only {
+  border: none;
+}
+
+.user-profile-display .user-profile {
+  width: 40px;
+}
+.user-profile-display .user-info .user-full-name {
+  font-size: 15px;
+}
+.user-profile-display .user-info .designation {
+  font-size: 14px;
+  color: #666;
+}
+
+.date-filter {
+  display: inline;
+  width: unset;
+}
+.date-filter:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+table > tbody {
+  vertical-align: baseline !important;
+}
+table > tbody td .nav-link {
+  padding: 5px 10px;
+  margin-left: 5px;
+  border-radius: 5px;
+  font-size: 14px;
+  padding-top: 7px;
+}
+table > tbody td .nav-link:first-child {
+  margin-left: 0;
+}
+
+.custom-label {
+  border-radius: 25px;
+  padding: 4px 15px;
+}
+.custom-label.small {
+  font-size: 12px;
+  padding: 2px 10px;
+}
+.custom-label.blue-color-label {
+  color: #7F8FC5;
+  background-color: #E3F9FF;
+}
+.custom-label.orange-color-label {
+  color: #F8A174;
+  background-color: #FEF3E4;
+}
+.custom-label.red-color-label {
+  color: #bf4141;
+  background-color: rgba(255, 0, 0, 0.17);
+}
+.custom-label.purple-color-label {
+  color: #824EA3;
+  background-color: #F1EAF7;
+}
+.custom-label.green-color-label {
+  color: #4fa06d;
+  background-color: rgba(27, 209, 27, 0.17);
+}
+
+.primary-color {
+  color: #42BF77;
+}
+
+.primary-bg-color {
+  background-color: #42BF77;
+  color: #ffffff;
+}
+
+.danger-color {
+  color: #bf4141;
+}
+
+.danger-bg-color {
+  background-color: #bf4141;
+  color: #ffffff;
+}
+
+.dark-color {
+  color: #222222;
+}
+
+.dark-bg-color {
+  background-color: #222222;
+  color: #ffffff;
+}
+
+.modal .modal-footer {
+  background-color: rgba(27, 209, 27, 0.178);
+}
+
+.form-control:focus, .form-select:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: #42BF77;
+}
+
+.required {
+  color: #bf4141;
+}
+
+body {
+  background-color: #222222;
+  display: flex;
+  height: 100vh;
+  position: relative;
+}
+body #sidebar {
+  width: 15%;
+}
+body #sidebar #logo-container {
+  height: 65px;
+}
+body #sidebar #sidebar-body ul.sidebar-navigation li {
+  margin-bottom: 18px;
+}
+body #sidebar #sidebar-body ul.sidebar-navigation li:last-child {
+  margin-bottom: 0;
+}
+body #sidebar #sidebar-body ul.sidebar-navigation li a.nav-link {
+  color: #ffffff;
+  padding: 10px 10px;
+  border-radius: 5px;
+}
+body #sidebar #sidebar-body ul.sidebar-navigation li a.nav-link.active {
+  background-color: #42BF77;
+}
+body #sidebar #sidebar-body ul.sidebar-navigation li a.nav-link i {
+  margin-right: 5px;
+}
+body #body-content {
+  width: 85%;
+  overflow-y: auto;
+  background-color: #ffffff;
+  border-top-left-radius: 15px;
+  position: relative;
+}
+body #body-content header {
+  height: 65px;
+}
+body #body-content header .navbar #user-action {
+  padding-left: 20px;
+}
+body #body-content header .navbar #user-action .user-profile {
+  width: 50px;
+}
+body #body-content header .navbar #user-action .user-info .designation {
+  color: #5f5f5f !important;
+}
+body #body-content header .navbar #user-action .logout-button {
+  color: #4fa06d;
+  background-color: rgba(27, 209, 27, 0.178);
+  margin: auto 0;
+  margin-left: 10px;
+}
+body #body-content #dashboard #employee-status .employee-status-card:first-child {
+  padding-left: 0;
+}
+body #body-content #dashboard #employee-status .employee-status-card:last-child {
+  padding-right: 0;
+}
+body #body-content #dashboard #employee-status .employee-status-card .card-wrapper {
+  border: solid 1px #ccc;
+  border-radius: 5px;
+  padding: 10px;
+}
+body #body-content #dashboard #employee-status .employee-status-card .card-wrapper .employee-status-card-icon {
+  padding: 10px 15px;
+  font-size: 25px;
+  border-radius: 5px;
+}
+body #body-content #dashboard #employee-status .employee-status-card .card-wrapper .employee-status-card-counter .counter-text {
+  display: inline-block;
+}
+body #body-content #dashboard #employee-status .employee-status-card .card-wrapper .employee-status-card-counter .sub-counter-text {
+  display: inline-block;
+  font-size: 13px !important;
+  margin-left: 5px;
+}
+body #body-content #dashboard #employee-status .employee-status-card .card-wrapper .employee-status-card-filter .btn {
+  background-color: #e7e7e7;
+  border-radius: 15px;
+}
+body #body-content #dashboard #employee-status .employee-status-card .card-wrapper .employee-status-card-filter .btn.dropdown-toggle::after {
+  border: none;
+  content: none;
+}
+body #body-content #dashboard #employee-status .employee-status-card#total-employees .employee-status-card-icon {
+  background-color: rgba(0, 255, 255, 0.15);
+  color: #3ee3d4;
+}
+body #body-content #dashboard #employee-status .employee-status-card#pending-request .employee-status-card-icon {
+  background-color: rgba(177, 149, 255, 0.15);
+  color: #5F42C6;
+}
+body #body-content #dashboard #employee-status .employee-status-card#resigned-employees .employee-status-card-icon {
+  background-color: rgba(255, 144, 148, 0.15);
+  color: #bf4141;
+}
+body #body-content #dashboard #employee-detailed-view .navigation-tabs {
+  gap: 15px;
+}
+body #body-content #dashboard #employee-detailed-view .navigation-tabs .btn {
+  color: #aaa;
+  position: relative;
+}
+body #body-content #dashboard #employee-detailed-view .navigation-tabs .btn.active {
+  color: #222222;
+}
+body #body-content #dashboard #employee-detailed-view .navigation-tabs .btn.active::after {
+  content: "";
+  position: absolute;
+  border-bottom: solid 4px #42BF77;
+  height: 5px;
+  bottom: -10px;
+  left: 50%;
+  width: 35%;
+  transform: translateX(-50%);
+  border-radius: 5px;
+}
+body #body-content #dashboard #employee-detailed-view .employee-detailed-view-filter {
+  position: relative;
+  border-radius: 25px;
+  border: solid 1px #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-left: 15px;
+}
+body #body-content #dashboard #employee-detailed-view .employee-detailed-view-filter .search-filter {
+  position: relative;
+  border: none;
+  border-radius: 25px;
+}
+body #body-content #dashboard #employee-detailed-view .employee-detailed-view-filter .search-filter:focus {
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+body #body-content #attendance-calendar #calendar .event-style {
+  padding: 5px 5px;
+  font-weight: 700;
+}
+body #body-content #attendance-calendar #calendar .event-style.absent {
+  background-color: #bf4141;
+  border-color: #bf4141;
+}
+body #body-content #attendance-calendar #calendar .event-style.present {
+  background-color: #299120;
+  border-color: #299120;
+}
+@keyframes l19 {
+  0%, 10% {
+    background-position: 0 0, 0 33.3333333333%;
+  }
+  50% {
+    background-position: 0 0, 33.3333333333% 33.3333333333%;
+  }
+  90%, 100% {
+    background-position: 0 0, 33.3333333333% 0;
+  }
+}
+body #body-content #fullscreen-loader {
+  height: 100%;
+  width: 100%;
+  display: none;
+  position: absolute;
+  background-color: #ffffff;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+body #body-content #fullscreen-loader .loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 45px;
+  aspect-ratio: 1;
+  --c: conic-gradient(from -90deg,#000 90deg,#0000 0);
+  background: var(--c), var(--c);
+  background-size: 40% 40%;
+  animation: l19 1s infinite alternate;
+}
+body #footer {
+  width: 100%;
+  height: 35px;
+  background-color: #222222;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  z-index: 101;
+}
+body .content-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ccc;
+  font-size: 18px;
+  width: 100%;
+  height: 300px;
+}
+body .content-placeholder .icon {
+  font-size: 50px;
+  margin-bottom: 10px;
+}/*# sourceMappingURL=style.css.map */
