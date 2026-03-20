@@ -53,7 +53,7 @@ function loadEmployees(employee_name=null, use_loader=true){
         startLoader()
 
     $.ajax({
-        url: 'http://localhost:8002/api/employees/get_employees/',
+        url: 'https://myhrms.zapto.org/api/employees/get_employees/',
         method: 'GET',
         data: {
             employee_name: employee_name
@@ -183,7 +183,7 @@ function getEmployeeDetails(employee_id){
     $("#password-container").hide()
     $("#id_email").attr("readonly", true)
     $.ajax({
-        url: 'http://localhost:8002/api/employees/' + employee_id + '/get_employee/',
+        url: 'https://myhrms.zapto.org/api/employees/' + employee_id + '/get_employee/',
         type: 'get',
         dataType: "json",
         success: function(response) {
@@ -242,11 +242,11 @@ function submitAddEmoloyeeForm(edit=false){
         let data = new FormData(form);
 
         // Update url and method type
-        let url = 'http://localhost:8002/api/employees/add_employee/'
+        let url = 'https://myhrms.zapto.org/api/employees/add_employee/'
         let type = 'post'
         if (edit){
             let employee_id = $("#id_employee_id").val()
-            url = 'http://localhost:8002/api/employees/' + employee_id + '/update_employee/'
+            url = 'https://myhrms.zapto.org/api/employees/' + employee_id + '/update_employee/'
             type = 'put'
         }
         
@@ -320,7 +320,7 @@ function archiveEmployee(employee_id){
         function(){ 
             startLoader()
             $.ajax({
-                url: 'http://localhost:8002/api/employees/' + employee_id + '/archive_employee/',
+                url: 'https://myhrms.zapto.org/api/employees/' + employee_id + '/archive_employee/',
                 type: 'delete',
                 dataType: "json",
                 success: function(response) {
@@ -353,7 +353,7 @@ function archiveEmployee(employee_id){
 function restoreEmployee(employee_id){
     startLoader()
     $.ajax({
-        url: 'http://localhost:8002/api/employees/' + employee_id + '/restore_employee/',
+        url: 'https://myhrms.zapto.org/api/employees/' + employee_id + '/restore_employee/',
         type: 'patch',
         dataType: "json",
         success: function(response) {
@@ -466,7 +466,7 @@ function loadAttendanceCalendar() {
 // Fethc Attendance data
 function fetchAttendance(startDate, endDate) {
     $.ajax({
-        url: 'http://localhost:8002/api/attendances/get_calendar_attendance/',
+        url: 'https://myhrms.zapto.org/api/attendances/get_calendar_attendance/',
         method: 'GET',
         dataType: 'json',
         data: {
@@ -532,7 +532,7 @@ function loadListViewAttendance(date=null){
         date = $(".date-filter").val();
     
     $.ajax({
-        url: 'http://localhost:8002/api/attendances/get_listview_attendance/',
+        url: 'https://myhrms.zapto.org/api/attendances/get_listview_attendance/',
         data: {
             attendance_date: date
         },
@@ -598,7 +598,7 @@ function markAttendance(status, emp_id, is_current_day){
     }
 
     $.ajax({
-        url: 'http://localhost:8002/api/attendances/'+ emp_id +'/mark_attendance/',
+        url: 'https://myhrms.zapto.org/api/attendances/'+ emp_id +'/mark_attendance/',
         method: 'patch',
         dataType: 'json',
         data: {
