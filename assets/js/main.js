@@ -53,7 +53,7 @@ function loadEmployees(employee_name=null, use_loader=true){
         startLoader()
 
     $.ajax({
-        url: 'https://myhrms.zapto.org/api/employees/get_employees/',
+        url: 'http://localhost:8002/api/employees/get_employees/',
         method: 'GET',
         data: {
             employee_name: employee_name
@@ -183,7 +183,7 @@ function getEmployeeDetails(employee_id){
     $("#password-container").hide()
     $("#id_email").attr("readonly", true)
     $.ajax({
-        url: 'https://myhrms.zapto.org/api/employees/' + employee_id + '/get_employee/',
+        url: 'http://localhost:8002/api/employees/' + employee_id + '/get_employee/',
         type: 'get',
         dataType: "json",
         success: function(response) {
@@ -235,24 +235,26 @@ function getEmployeeDetails(employee_id){
 
 // Submit Add/Edit Employee Form
 function submitAddEmoloyeeForm(edit=false){
-    if (employeeFormValid()){
+    if (employeeFormValid(edit)){
         startLoader()
         $("#addEmployeeModal").modal('hide')
         let form = document.querySelector("#add-employee-modal-form");
         let data = new FormData(form);
 
         // Update url and method type
-        let url = 'https://myhrms.zapto.org/api/employees/add_employee/'
+        let url = 'http://localhost:8002/api/employees/add_employee/'
         let type = 'post'
         if (edit){
             let employee_id = $("#id_employee_id").val()
-            url = 'https://myhrms.zapto.org/api/employees/' + employee_id + '/update_employee/'
+            url = 'http://localhost:8002/api/employees/' + employee_id + '/update_employee/'
             type = 'put'
         }
         
         submitAddEmoloyeeFormComponent(url, data, type)
-    } else 
+    } else {
         Notiflix.Notify.failure("Please fill all the required fields!")
+        $("#addEmployeeModal").modal('show')
+    }
 }
 
 function submitAddEmoloyeeFormComponent(url, data, type, resubmit=false){
@@ -318,7 +320,7 @@ function archiveEmployee(employee_id){
         function(){ 
             startLoader()
             $.ajax({
-                url: 'https://myhrms.zapto.org/api/employees/' + employee_id + '/archive_employee/',
+                url: 'http://localhost:8002/api/employees/' + employee_id + '/archive_employee/',
                 type: 'delete',
                 dataType: "json",
                 success: function(response) {
@@ -351,7 +353,7 @@ function archiveEmployee(employee_id){
 function restoreEmployee(employee_id){
     startLoader()
     $.ajax({
-        url: 'https://myhrms.zapto.org/api/employees/' + employee_id + '/restore_employee/',
+        url: 'http://localhost:8002/api/employees/' + employee_id + '/restore_employee/',
         type: 'patch',
         dataType: "json",
         success: function(response) {
@@ -464,7 +466,7 @@ function loadAttendanceCalendar() {
 // Fethc Attendance data
 function fetchAttendance(startDate, endDate) {
     $.ajax({
-        url: 'https://myhrms.zapto.org/api/attendances/get_calendar_attendance/',
+        url: 'http://localhost:8002/api/attendances/get_calendar_attendance/',
         method: 'GET',
         dataType: 'json',
         data: {
@@ -530,7 +532,7 @@ function loadListViewAttendance(date=null){
         date = $(".date-filter").val();
     
     $.ajax({
-        url: 'https://myhrms.zapto.org/api/attendances/get_listview_attendance/',
+        url: 'http://localhost:8002/api/attendances/get_listview_attendance/',
         data: {
             attendance_date: date
         },
@@ -596,7 +598,7 @@ function markAttendance(status, emp_id, is_current_day){
     }
 
     $.ajax({
-        url: 'https://myhrms.zapto.org/api/attendances/'+ emp_id +'/mark_attendance/',
+        url: 'http://localhost:8002/api/attendances/'+ emp_id +'/mark_attendance/',
         method: 'patch',
         dataType: 'json',
         data: {
@@ -620,13 +622,16 @@ function employeeFormValid(skip_password=false){
     // Full form validation can be added here. For now, just checking if required fields are filled
     let valid = true;
     $("#add-employee-modal-form [required]").each(function(){
-        if (!$(this).val() && $(this).parent("#password-container").length == 0){
+        if (!$(this).val() && $(this).attr("type") != "password"){
             valid = false;
             $(this).addClass('is-invalid')
         } else {
             if ($(this).attr("type") == "email" && !emailValidation($(this).val())){
-                valid = false;
                 $(this).addClass('is-invalid')
+                valid = false;
+            } else if ($(this).attr("type") == "password" && !skip_password){
+                $(this).addClass('is-invalid')
+                valid = false;
             } else
                 $(this).removeClass('is-invalid')
         }
@@ -652,6 +657,16 @@ function emailValidation(email){
         return false;
     }
     return true;
+}
+
+function passwordValidation(skip_password){
+    let valid = true;
+    if (skip_password)
+        return valid;
+    else {
+        // validation here (no need for now)
+        return valid
+    }
 }
 
 
