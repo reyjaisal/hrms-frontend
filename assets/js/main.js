@@ -629,7 +629,7 @@ function employeeFormValid(skip_password=false){
             if ($(this).attr("type") == "email" && !emailValidation($(this).val())){
                 $(this).addClass('is-invalid')
                 valid = false;
-            } else if ($(this).attr("type") == "password" && !skip_password){
+            } else if (!$(this).val() && ($(this).attr("type") == "password" && !skip_password)){
                 $(this).addClass('is-invalid')
                 valid = false;
             } else
